@@ -79,6 +79,7 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
       handleComponent: HandleComponent = Handle,
       backgroundComponent: BackgroundComponent = null,
       children,
+      ...rest
     },
     ref
   ) => {
@@ -103,7 +104,7 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
     invariant(
       initialSnapIndex >= -1 && initialSnapIndex <= _snapPoints.length - 1,
       `'initialSnapIndex' was provided but out of the provided snap points range! expected value to be between -1, ${
-        _snapPoints.length - 1
+      _snapPoints.length - 1
       }`
     );
 
@@ -268,7 +269,7 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
         invariant(
           index >= -1 && index <= snapPoints.length - 1,
           `'index' was provided but out of the provided snap points range! expected value to be between -1, ${
-            snapPoints.length - 1
+          snapPoints.length - 1
           }`
         );
         autoSnapTo.setValue(snapPoints[index]);
@@ -391,9 +392,12 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
                 {...handlePanGestureHandler}
               >
                 <Animated.View>
-                  <HandleComponent
-                    animatedPositionIndex={animatedPositionIndex}
-                  />
+                  {rest.renderHandle
+                    ? rest.renderHandle()
+                    : <HandleComponent
+                      animatedPositionIndex={animatedPositionIndex}
+                    />
+                  }
                 </Animated.View>
               </PanGestureHandler>
 
