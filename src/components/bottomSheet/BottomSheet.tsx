@@ -6,7 +6,7 @@ import React, {
   useImperativeHandle,
   memo,
 } from 'react';
-import { ViewStyle } from 'react-native';
+import { ViewStyle, Platform } from 'react-native';
 import isEqual from 'lodash.isequal';
 import invariant from 'invariant';
 import Animated, {
@@ -212,7 +212,7 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
     /**
      * Scrollable animated props.
      */
-    const decelerationRate = cond(greaterThan(position, 0), 0.001, 0.999);
+    const decelerationRate = cond(greaterThan(position, 0), rest?.decelerationRate?.disable ? rest?.decelerationRate?.disable : 0, rest?.decelerationRate?.enable ? rest?.decelerationRate?.enable : 0.999);
     //#endregion
 
     //#region styles
